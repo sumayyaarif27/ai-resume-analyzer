@@ -13,9 +13,10 @@ __pycache__/
 .vscode/
 .DS_Store
 
-# Uploaded resumes and real personal data
+# Real resumes and personal data (only the fictional sample is allowed)
 uploads/
 sample_data/*.pdf
+!sample_data/sample_resume.pdf
 
 # Downloaded reports (may contain resume details)
 resume_analysis_report*
