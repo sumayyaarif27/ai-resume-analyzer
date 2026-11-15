@@ -1,0 +1,21 @@
+# Secrets (API keys)
+.env
+
+# Virtual environment
+venv/
+
+# Python and test cache files
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Editor and OS files
+.vscode/
+.DS_Store
+
+# Uploaded resumes and real personal data
+uploads/
+sample_data/*.pdf
+
+# Downloaded reports (may contain resume details)
+resume_analysis_report*

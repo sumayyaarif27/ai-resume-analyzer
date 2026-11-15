@@ -1,0 +1,17 @@
+Job Title: Data Analyst (Fresher)
+
+We are looking for a Data Analyst to join our team in Bengaluru.
+
+Responsibilities:
+- Clean, analyze and visualize data using SQL, Excel and Power BI
+- Build dashboards and share insights with business teams
+- Write Python scripts for data cleaning and analysis
+- Present findings clearly to non-technical stakeholders
+
+Requirements:
+- Bachelor's or Master's degree in Computer Applications, Computer Science or a related field
+- Strong knowledge of SQL and Excel
+- Experience with Power BI or Tableau
+- Basic Python (Pandas) skills
+- Good communication and problem-solving skills
+- Knowledge of statistics is a plus
