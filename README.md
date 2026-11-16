@@ -1,21 +1,45 @@
- AI-Powered Resume Analyzer & Job Matcher
+# 📄 AI-Powered Resume Analyzer & Job Matcher
 
 A web app that uses **Generative AI** to compare a resume with a job description. It shows an estimated match score, the skills you already have, the skills you are missing, and ways to improve your resume, without inventing anything you do not have.
 
- Note: The score is an AI-generated estimate based on clear criteria (listed below). It is not an official ATS score.
+> **Note:** The score is an AI-generated estimate based on clear criteria (listed below). It is **not** an official ATS score.
 
- Features
+## ✨ Features
 
-- Resume upload: PDF only, with checks for empty, damaged, password-protected, scanned (image-only) and very large files
-- Job description input: paste any job description
-- AI analysis with Google Gemini: match score, matching and missing skills, relevant experience, education comparison, strengths and weaknesses
-- Transparent scoring: the 100-point score is split into 5 clear criteria and is re-added by the code, not trusted blindly from the AI
-- Improvement suggestions: missing keywords, skills to highlight, a rewritten professional summary, better bullet points and formatting tips
-- Results dashboard: score card, score breakdown, skills summary, experience and education sections, and recommendation tabs
-- Downloadable report: PDF and Markdown
-- Safe by design: the AI is told never to invent skills, degrees, jobs or numbers
+- **Resume upload:** PDF only, with checks for empty, damaged, password-protected, scanned (image-only) and very large files
+- **Job description input:** paste any job description
+- **AI analysis with Google Gemini:** match score, matching and missing skills, relevant experience, education comparison, strengths and weaknesses
+- **Transparent scoring:** the 100-point score is split into 5 clear criteria and is re-added by the code, not trusted blindly from the AI
+- **Improvement suggestions:** missing keywords, skills to highlight, a rewritten professional summary, better bullet points and formatting tips
+- **Results dashboard:** score card, score breakdown, skills summary, experience and education sections, and recommendation tabs
+- **Downloadable report:** PDF and Markdown
+- **Safe by design:** the AI is told never to invent skills, degrees, jobs or numbers
 
-Tech Stack
+## 📸 Screenshots
+
+All screenshots use a fictional sample resume (`sample_data/sample_resume.pdf`).
+
+**1. Upload a resume and paste a job description**
+
+![Upload and job description](docs/images/01-upload-and-job.png)
+
+**2. Estimated match score and how it was calculated**
+
+![Match score and breakdown](docs/images/02-score.png)
+
+**3. Matching and missing skills**
+
+![Skills match](docs/images/03-skills.png)
+
+**4. Strengths, weaknesses, experience and education comparison**
+
+![Strengths, weaknesses and education](docs/images/04-strengths-and-education.png)
+
+**5. Recommendations and report download**
+
+![Recommendations and downloads](docs/images/05-recommendations.png)
+
+## 🧱 Tech Stack
 
 | Purpose | Technology |
 |---|---|
@@ -27,7 +51,7 @@ Tech Stack
 | Testing | pytest |
 | Version control | Git and GitHub |
 
-How It Works
+## 🏗️ How It Works
 
 ```mermaid
 flowchart LR
@@ -42,7 +66,7 @@ flowchart LR
 
 Each file has one job, so the code stays easy to read, test and change. The Streamlit app (`app.py`) never talks to Gemini directly. It only calls `analyzer.py`.
 
- Project Structure
+## 📁 Project Structure
 
 ```
 ai-resume-analyzer/
@@ -60,15 +84,17 @@ ai-resume-analyzer/
 │   ├── test_pdf_extractor.py
 │   ├── test_analyzer.py
 │   ├── test_gemini_client.py
-│   └── live_check.py         # Optional check with the real Gemini API
-├── sample_data/              # Sample job descriptions
+│   ├── live_check.py         # Optional check with the real Gemini API
+│   └── make_sample_resume.py # Creates the fictional sample resume
+├── sample_data/              # Sample job descriptions and a fictional resume
+├── docs/images/              # Screenshots used in this README
 ├── requirements.txt
 ├── requirements-dev.txt
 ├── .env.example
 └── README.md
 ```
 
- How the Score Works
+## 📊 How the Score Works
 
 The AI gives points for each part, and the code adds them up (each part is also limited to its maximum):
 
@@ -81,7 +107,7 @@ The AI gives points for each part, and the code adds them up (each part is also 
 | Resume clarity | 10 |
 | **Total** | **100** |
 
- Setup and Installation
+## 🚀 Setup and Installation
 
 **You need:** Python 3.10 or newer and a free Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey).
 
@@ -109,14 +135,16 @@ python -m streamlit run app.py
 
 The app opens at `http://localhost:8501`. Upload a PDF resume, paste a job description and click **Analyze Resume**.
 
-Testing
+**To try it without your own resume:** upload `sample_data/sample_resume.pdf` (a fictional resume) and paste the text of `sample_data/sample_job.txt` as the job description. Use `sample_data/sample_job_poor.txt` to see how a poor match looks.
+
+## 🧪 Testing
 
 ```bash
 pip install -r requirements-dev.txt
 python -m pytest -v
 ```
 
-The automated tests use a fake Gemini, so they need no internet or API key. They cover:
+The 34 automated tests use a fake Gemini, so they need no internet or API key. They cover:
 
 - Valid, empty, non-PDF, damaged, password-protected, text-less and oversized PDFs
 - Missing or too-short job descriptions and missing resumes
@@ -125,37 +153,38 @@ The automated tests use a fake Gemini, so they need no internet or API key. They
 - Score re-calculation and limits
 - Resume text that tries to give instructions to the AI (prompt injection)
 
-Live check (optional): `python -m tests.live_check` runs the real Gemini API on a resume at `sample_data/resume.pdf` (use your own, it is not included). It checks that a good match scores high, a poor match scores low, and two runs of the same job give similar scores. It also looks for claims that are not supported by the resume (skills with no trace in the resume, bullet points not copied from the resume, and numbers that were not there).
+**Live check (optional):** `python -m tests.live_check` runs the real Gemini API on a resume at `sample_data/resume.pdf` (use your own, it is not included). It checks that a good match scores high, a poor match scores low, and two runs of the same job give similar scores. It also looks for claims that are not supported by the resume (skills with no trace in the resume, bullet points not copied from the resume, and numbers that were not there).
 
-Privacy and Safety
+## 🔒 Privacy and Safety
 
 - The API key lives in `.env`, which is excluded from Git. `.env.example` shows what is needed.
 - Resumes are processed in memory. The app does not save uploaded files.
 - Text from the resume and job description is treated as **data, never as instructions**. Special tags are removed so they cannot break the prompt, and nothing from a document is ever executed.
 - The AI is instructed to use only facts written in the resume, and recommendations are reminders to only add what is true.
 - Reports can contain details taken from a resume, so keep them private. Report files are excluded from Git.
+- The only resume in this repository is a fictional sample.
 
-Limitations
+## ⚠️ Limitations
 
-- The score is an estimate from an AI model, not an official ATS score. Scores can change by a few points between runs.
-- Only text-based PDFs are supported (no scanned images or OCR), up to 5 MB.
+- The score is an **estimate** from an AI model, not an official ATS score. Scores can change by a few points between runs.
+- Only **text-based PDFs** are supported (no scanned images or OCR), up to 5 MB.
 - The analysis depends on how clearly the resume and job description are written.
 - Free Gemini API limits apply. When the limit is reached, the app retries and then shows a clear message.
 - The AI model name is set in `src/config.py` and may need updating when Google changes its models.
 
-Troubleshooting
+## 🛠️ Troubleshooting
 
-- `streamlit` says "Permission denied" on Windows: use `python -m streamlit run app.py` (as shown above).
-- "DLL load failed ... Application Control policy" error: Windows security can block some compiled packages. The dashboard uses only built-in Streamlit widgets to avoid this.
-- "Model not found": check `MODEL_NAME` in `src/config.py` against the models shown in Google AI Studio.
+- **`streamlit` says "Permission denied" on Windows:** use `python -m streamlit run app.py` (as shown above).
+- **"DLL load failed ... Application Control policy" error:** Windows security can block some compiled packages. The dashboard uses only built-in Streamlit widgets to avoid this.
+- **"Model not found":** check `MODEL_NAME` in `src/config.py` against the models shown in Google AI Studio.
 
-Future Improvements
+## 💡 Future Improvements
 
 - Support for DOCX resumes and OCR for scanned PDFs
 - Compare one resume against several jobs at once
 - Keep a history of analyses
 - Deploy the app online
 
-Author
+## 👩‍💻 Author
 
 Built by **Sumayya Mahammad Arif** as a GenAI portfolio project.
